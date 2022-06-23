@@ -1,0 +1,68 @@
+<h2>Quanto rende uma aplidação CDB?</h2>
+
+<p>Preecha o formulário com o valor do investimento e o prazo desejado.</p>
+
+<div>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="form-group col-12 col-md-6">
+        <label for="value">Valor</label>
+        <input type="text" name="value" formControlName="value" class="form-control text-end" autofocus
+          [ngClass]="validator(fc.value)">
+        <div class="invalid-feedback" *ngIf="fc.value.touched && fc.value.errors?.required">Informe um valor válido
+        </div>
+        <div class="invalid-feedback" *ngIf="fc.value.touched && fc.value.errors?.min">
+          O valor deve ser maior do que zero.
+        </div>
+        <div class="invalid-feedback" *ngIf="fc.value.touched && fc.value.errors?.max">
+          Valor máximo é R$ 999.999.999.999,99, informe outro valor.
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="deadline">Prazo (em meses)</label>
+        <input type="text" name="deadline" formControlName="deadline" class="form-control text-end"
+          [ngClass]="validator(fc.deadline)">
+        <div class="invalid-feedback" *ngIf="fc.deadline.touched && fc.deadline.errors?.required">Campo obrigatório
+        </div>
+        <div class="invalid-feedback" *ngIf="fc.deadline.touched && fc.deadline.errors?.min">
+          O prazo mínimo é de 2 meses
+        </div>
+        <div class="invalid-feedback" *ngIf="fc.deadline.touched && fc.deadline.errors?.max">
+          O prazo máximo é de 180 meses
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="form-group col-12 col-md-6">
+        <button type="button" class="btn btn-success w-100" [disabled]="!form.valid || isLoading" (click)="calcInvestment()"><em
+            class="fa fa-calculator me-2"></em>Calcular</button>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <button type="button" class="btn btn-outline-danger w-100" (click)="clearForm()"><em
+            class="fa fa-eraser me-2"></em>Limpar formulário</button>
+      </div>
+    </div>
+
+    <p></p>
+    <div class="row">
+      <div class="form-group col-12 col-md-6">
+        <p>Resultado.</p>
+        <ul class="list-unstyled mt-3 mb-4" *ngIf="!hasError">
+          <li><span class="text-bold">Valor bruto: </span>{{ return.grossValue | currency : 'BRL' }}</li>
+          <li><span class="text-bold">Valor líquido: </span>{{ return.netValue | currency : 'BRL' }}
+          </li>
+        </ul>
+        <ul class="list-unstyled mt-3 mb-4" *ngIf="hasError">
+          <li><span class="text-bold">Valor bruto: </span>###</li>
+          <li><span class="text-bold">Valor líquido: </span>###</li>
+        </ul>
+      </div>
+      <div class="form-group" *ngIf="hasError">
+        <div class="alert alert-danger" role="alert" >
+          Houve um problema ao tentar calcular o retorno da aplicação.
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
