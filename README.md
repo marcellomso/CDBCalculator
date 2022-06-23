@@ -19,7 +19,7 @@ Siga as instruções abaixo para compilar e executar o projeto
 
 Abra o terminal de comando, e selecione uma pasta para clonar o repositório como seguinte comando:
 ```
-git clone https://github.com/marcellomso/CDBCalc.git
+git clone https://github.com/marcellomso/CDBCalculator.git
 ```
 
 
